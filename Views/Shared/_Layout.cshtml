@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link href="../css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="../images/drop-shop-bag-icon.png" rel="icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300&display=swap" rel="stylesheet">
+    @RenderSection("Stylesheets", required: false)
+</head>
+
+<body>
+    <header>
+        <!--MAIN NAVBAR-->
+        <nav id="navbar">
+            <ul>
+                <li id="menu-bars" tabindex="0">
+                    <a href="" onclick="return show();">
+                        <div class="menu-bar" id="first"></div>
+                        <div class="menu-bar"></div>
+                        <div class="menu-bar" id="last"></div>
+                    </a>
+                </li>
+                <li id="home">
+                    <a href="@Url.Action("Index", "Home")" tabindex="1">
+                        <span>HOME</span>
+                    </a>
+                </li>
+                <li id="men">
+                    <a href="" tabindex="2">
+                        <span>MEN</span>
+                    </a>
+                </li>
+                <li id="women">
+                    <a href="" tabindex="3">
+                        <span>WOMEN</span>
+                    </a>
+                </li>
+                <li id="drop-shop-logo">
+                    <a href="@Url.Action("Index", "Home")" tabindex="4">
+                        <img src="../images/drop-shop-icon.png" alt="drop shop logo">
+                    </a>
+                </li>
+                <li class="search-bar hide-search" tabindex="5">
+                    <div>
+                        <form action="URL">
+                            <input type="text">
+                        </form>
+                    </div>
+
+                </li>
+                <li id="search-icon">
+                    <a href="" onclick="return false;" tabindex="6">
+                        <img src="../images/search_icon.png" alt="search" onclick="show_search_bar();">
+                    </a>
+                </li>
+                <li id="shopping-cart-icon">
+                    <a href="/identity/account/login" tabindex="7">
+                        <img src="../images/shopping-cart-icon.png" alt="shopping cart">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!--SIDE NAVBAR-->
+        <aside class="side-navbar hide">
+            <ul>
+                <li>
+                    <a href="" id="back-btn" onclick="return hide();">
+                        <img src="../images/back_arrow.svg"
+                             alt="back button">
+                    </a>
+                </li>
+                <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                <li><a href="">MEN</a></li>
+                <li><a href="">WOMEN</a></li>
+            </ul>
+        </aside>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer>
+        <ul>
+            <li id="dropshop-copyright">© 2022 Drop Shop</li>
+            <li id="privacy"><a href="">Privacy &amp; Cookies</a></li>
+            <li><a href="">|</a></li>
+            <li id="tscs"><a href="">Ts &amp; Cs</a></li>
+            <li><a href="">|</a></li>
+            <li id="accessibility"><a href="">Accessibility</a></li>
+        </ul>
+    </footer>
+    <script>
+
+        const sideMenu = document.querySelector(".side-navbar");
+        const searchBar = document.querySelector(".search-bar");
+        const navBarList = document.querySelector("#navbar ul");
+        const searchIcon = document.querySelector("#search-icon a img");
+        const searchBarInpt = document.querySelector("li.search-bar input");
+
+        function show() {
+            sideMenu.classList.remove("hide");
+            return false;
+        }
+
+        function hide() {
+            sideMenu.classList.add("hide");
+            return false;
+        }
+
+        function show_search_bar() {
+            if (window.innerWidth < 769) {
+                searchBar.classList.toggle("hide-search");
+                searchBarInpt.value = "";
+                return false;
+            }
+        }
+
+
+        window.addEventListener("click", (e) => {
+            console.log(e.target);
+            if (e.target !== navBarList && e.target !== searchIcon && e.target !== searchBarInpt) {
+                searchBar.classList.add("hide-search");
+                console.log("it should close now");
+            }
+        })
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

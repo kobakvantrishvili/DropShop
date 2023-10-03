@@ -1,0 +1,73 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = @Model.SelectedItemFromProducts?.ProductName;
+}
+
+@{
+    // Split FIT string to respective values
+    List<string[]> CWH = new List<string[]>(); // CHEST/WAIST/HIPS
+    foreach (Product? product in Model.SelectedItemsFromProduct)
+    {
+
+        CWH.Add(product?.Fit?.Split("/"));
+    }
+}
+
+@section Stylesheets {
+<link href="../css/clothing.css" rel="stylesheet" type="text/css" />
+}
+<!--MAIN-->
+<p>
+    <a href="@Url.Action("Index", "Home")">Home</a> > <a href=""> @Model.SelectedItemFromProducts?.Sex </a> > <a href="">@Model.SelectedItemCategory?.CategoryName</a> > <span id="mapping-destination"><a href="">@Model.SelectedItemFromProducts?.ProductName</a></span>
+</p>
+
+<figure id="container">
+    <img src="@Model.SelectedItemFromProducts?.ImgSrc" alt="@Model.SelectedItemFromProducts?.ProductDetails">
+    <figcaption>
+        @Model.SelectedItemFromProducts?.ProductName<br> <span id="sex">@Model.SelectedItemFromProducts?.Sex?.ToUpper()</span> <br>
+        <span id="price">@Model.SelectedItemFromProducts?.Price GEL</span> <br>
+
+        <form>
+            <label id="size">SIZES:</label>
+            <div id="size-form">
+                @foreach (Product? product in Model.SelectedItemsFromProduct){
+                    <label class="sizes"><input type="radio" value="@product.Size.ToUpper()" id="@product.Size.ToLower()" name="sizes"><span>@product.Size.ToUpper()</span></label>
+                }
+            </div>
+
+            <label><input type="submit" value="ADD TO CART" id="addtocart"></label>
+        </form>
+
+        <table id="size-table">
+            <caption>Size Chart</caption>
+            <thead>
+                <tr>
+                    <th id="fit">Fit</th>
+                    <th id="chest">Chest (cm)</th>
+                    <th id="waist">Waist (cm)</th>
+                    <th id="hips">Hips (cm)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 0; i < Model.SelectedItemsFromProduct.Count; i++)
+                {
+                    <tr>
+                        <td headers="fit">@Model.SelectedItemsFromProduct[i]?.Size</td>
+                        <td headers="chest">@CWH[i]?[0]</td>
+                        <td headers="waist">@CWH[i]?[1]</td>
+                        <td headers="hips">@CWH[i]?[2]</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </figcaption>
+</figure>
+
+@section Scripts{
+<script>
+</script>
+}
+

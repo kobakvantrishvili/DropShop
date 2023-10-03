@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Products>
+@{
+    ViewData["Title"] = "Drop Shop";
+}
+
+@section Stylesheets {
+    <link href="../css/index.css" rel="stylesheet" type="text/css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+}
+
+<figure id="banner1">
+    <p id="left-word">Experiance</p>
+    <img src="../images/forbanner1.png" alt="banner picture 80% off spring sale">
+    <p id="right-word">Quality</p>
+    <div id="slider">
+        <div class="dots"></div>
+        <div class="dots"></div>
+        <div class="dots"></div>
+    </div>
+</figure>
+
+<figure id="banner2">
+    <img src="../images/banner2.png" alt="banner picture">
+</figure>
+
+<h1>FEATURED</h1>
+<hr>
+<div id="featured-container">
+    @if(Model != null)
+    {
+        foreach (var products in Model)
+        {
+            if (products.Featured == true)
+            {
+                <a href="@Url.Action("Item", "Home", new {ProductsID = products.ProductsId})">
+                <figure class="featured-clothing">
+                    <img src="@products.ImgSrc" alt="@products.ProductDetails">
+                    <figcaption>
+                        @products.ProductName <br> <span class="price">Price: @products.Price GEL</span>
+                    </figcaption>
+                </figure>
+            </a>
+            }
+        }
+    }
+    
+</div>
+
